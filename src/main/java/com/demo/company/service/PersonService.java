@@ -4,6 +4,8 @@ import com.demo.company.entity.Person;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface PersonService {
 
     void create(Person person) throws Exception;
@@ -12,7 +14,9 @@ public interface PersonService {
 
     void updateName(String code, Person person) throws Exception;
 
-    Page<Person> find(Pageable pageable) throws Exception;
+//    Page<Person> find(Pageable pageable) throws Exception;
+
+    List<Person> findAll() throws Exception;
 
     Person findByPersonCode(String code) throws Exception;
 

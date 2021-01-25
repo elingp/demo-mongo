@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -36,9 +38,14 @@ public class PersonServiceImpl implements PersonService {
         personRepository.save(oldPerson);
     }
 
+//    @Override
+//    public Page<Person> find(Pageable pageable) throws Exception {
+//        return personRepository.find(pageable);
+//    }
+
     @Override
-    public Page<Person> find(Pageable pageable) throws Exception {
-        return personRepository.find(pageable);
+    public List<Person> findAll() throws Exception {
+        return personRepository.findAll();
     }
 
     @Override

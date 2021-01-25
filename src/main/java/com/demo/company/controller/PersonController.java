@@ -59,11 +59,10 @@ public class PersonController {
                                                        @RequestParam String clientId, @RequestParam String requestId, @RequestParam String username,
                                                        @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size)
             throws Exception {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Person> people = this.personService.find(pageable);
-        List<PersonResponse> personResponses = people.getContent().stream().map(this::toPersonResponse).collect(Collectors.toList());
+        List<Person> people = this.personService.findAll();
+        List<PersonResponse> personResponses = people.stream().map(this::toPersonResponse).collect(Collectors.toList());
         return new ListBaseResponse<>(null, null, true, requestId, personResponses,
-                new Metadata(page, size, people.getTotalElements()));
+                new Metadata(1, people.size(), (long) people.size()));
     }
 
     @RequestMapping(value = PersonControllerPath.FIND_BY_CODE, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
