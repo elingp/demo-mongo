@@ -6,6 +6,7 @@ import com.demo.company.entity.Employee;
 import com.demo.company.repository.EmployeeRepository;
 import com.demo.dto.DepartmentRequest;
 import com.demo.dto.EmployeeCreateRequest;
+import com.demo.dto.EmployeeUpdateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
@@ -43,16 +44,19 @@ public class EmployeeControllerIntegrationTest {
   public static final int DEPT_NO = 1;
   public static final int EMP_NO = 1;
   public static final String EMP_NAME = "Joni";
+  public static final String EMP_NAME_UPDATE = "Jani";
   public static final double COMM = 10.0;
   public static final String HIRE_DATE = "2020-01-20";
   public static final int MGR = 1;
   public static final double SAL = 200000.0;
   public static final String CONTEXT_PATH = "/demo";
+  public static final String CODE_PATH = "/" + EMP_NO;
 
   @Value("${local.server.port}")
   private int port;
 
-  private EmployeeCreateRequest request;
+  private EmployeeCreateRequest employeeCreateRequest;
+  private EmployeeUpdateRequest employeeUpdateRequest;
   private DepartmentRequest departmentRequest;
   private ObjectMapper objectMapper;
   private Employee employee;
@@ -73,8 +77,9 @@ public class EmployeeControllerIntegrationTest {
     employee = Employee.builder().empNo(EMP_NO).build();
     departmentRequest =
         DepartmentRequest.builder().deptNo(DEPT_NO).deptName(DEPT_NAME).loc(LOC).build();
-    request = EmployeeCreateRequest.builder().empNo(EMP_NO).empName(EMP_NAME).comm(COMM)
+    employeeCreateRequest = EmployeeCreateRequest.builder().empNo(EMP_NO).empName(EMP_NAME).comm(COMM)
         .hireDate(HIRE_DATE).mgr(MGR).sal(SAL).department(departmentRequest).build();
+    employeeUpdateRequest = EmployeeUpdateRequest.builder().empName(EMP_NAME_UPDATE).build();
   }
 
   @Test
@@ -83,7 +88,7 @@ public class EmployeeControllerIntegrationTest {
         RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
             .queryParam(CHANNEL_ID_KEY, CHANNEL_ID_VALUE).queryParam(CLIENT_ID, CLIENT_ID_VALUE)
             .queryParam(REQUEST_ID_KEY, REQUEST_ID_VALUE).queryParam(USERNAME_KEY, USERNAME_VALUE)
-            .body(request).post(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH).then();
+            .body(employeeCreateRequest).post(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH).then();
     // .body(ObjectMapper.writeValueAsString(request))
     BaseResponse baseResponse =
         objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
@@ -99,11 +104,25 @@ public class EmployeeControllerIntegrationTest {
         RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
             .queryParam(CHANNEL_ID_KEY, CHANNEL_ID_VALUE).queryParam(CLIENT_ID, CLIENT_ID_VALUE)
             .queryParam(REQUEST_ID_KEY, REQUEST_ID_VALUE).queryParam(USERNAME_KEY, USERNAME_VALUE)
-            .body(request).post(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH).then();
+            .body(employeeCreateRequest).post(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH).then();
     BaseResponse baseResponse =
         objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
     Assert.assertFalse(baseResponse.isSuccess());
   }
 
+  @Test
+  public void updateEmployee_success_returnBaseResponse() throws Exception {
+    employeeRepository.save(employee);
+    ValidatableResponse validatableResponse =
+        RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
+            .queryParam(CHANNEL_ID_KEY, CHANNEL_ID_VALUE).queryParam(CLIENT_ID, CLIENT_ID_VALUE)
+            .queryParam(REQUEST_ID_KEY, REQUEST_ID_VALUE).queryParam(USERNAME_KEY, USERNAME_VALUE)
+            .body(employeeUpdateRequest).put(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH + CODE_PATH).then();
+    BaseResponse baseResponse =
+        objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
+    Assert.assertTrue(baseResponse.isSuccess());
+    Employee employee = employeeRepository.findFirstByEmpNoAndMarkForDeleteFalse(EMP_NO);
+    Assert.assertEquals(EMP_NAME_UPDATE, employee.getEmpName());
+  }
 
 }

@@ -57,8 +57,12 @@ public class EmployeeController {
   public BaseResponse updateByEmpNo(@RequestParam String storeId, @RequestParam String channelId,
       @RequestParam String clientId, @RequestParam String requestId, @RequestParam String username,
       @PathVariable Integer code, @RequestBody EmployeeUpdateRequest request) throws Exception {
-    this.employeeService.update(code, toEmployee(request));
-    return new BaseResponse(null, null, true, requestId);
+    try {
+      this.employeeService.update(code, toEmployee(request));
+      return new BaseResponse(null, null, true, requestId);
+    } catch (Exception e) {
+      return new BaseResponse(null, "EMPLOYEE NOT EXIST", false, requestId);
+    }
   }
 
   @RequestMapping(value = EmployeeControllerPath.UPDATE_NAME_BY_CODE, method = RequestMethod.PUT,
