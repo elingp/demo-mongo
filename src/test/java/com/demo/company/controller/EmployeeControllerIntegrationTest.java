@@ -125,4 +125,16 @@ public class EmployeeControllerIntegrationTest {
     Assert.assertEquals(EMP_NAME_UPDATE, employee.getEmpName());
   }
 
+  @Test
+  public void updateEmployee_failed_returnBaseResponse() throws Exception {
+    ValidatableResponse validatableResponse =
+        RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
+            .queryParam(CHANNEL_ID_KEY, CHANNEL_ID_VALUE).queryParam(CLIENT_ID, CLIENT_ID_VALUE)
+            .queryParam(REQUEST_ID_KEY, REQUEST_ID_VALUE).queryParam(USERNAME_KEY, USERNAME_VALUE)
+            .body(employeeUpdateRequest).put(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH + CODE_PATH).then();
+    BaseResponse baseResponse =
+        objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
+    Assert.assertFalse(baseResponse.isSuccess());
+  }
+
 }
