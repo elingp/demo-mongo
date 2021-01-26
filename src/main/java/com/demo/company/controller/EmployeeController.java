@@ -44,8 +44,12 @@ public class EmployeeController {
   public BaseResponse create(@RequestParam String storeId, @RequestParam String channelId,
       @RequestParam String clientId, @RequestParam String requestId, @RequestParam String username,
       @RequestBody EmployeeCreateRequest request) throws Exception {
-    this.employeeService.create(toEmployee(request));
-    return new BaseResponse(null, null, true, requestId);
+    try {
+      this.employeeService.create(toEmployee(request));
+      return new BaseResponse(null, null, true, requestId);
+    } catch (Exception e) {
+      return new BaseResponse(null, null, false, requestId);
+    }
   }
 
   @RequestMapping(value = EmployeeControllerPath.UPDATE_BY_CODE, method = RequestMethod.PUT,

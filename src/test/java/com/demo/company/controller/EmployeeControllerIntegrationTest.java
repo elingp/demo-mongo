@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -56,6 +55,7 @@ public class EmployeeControllerIntegrationTest {
   private EmployeeCreateRequest request;
   private DepartmentRequest departmentRequest;
   private ObjectMapper objectMapper;
+  private Employee employee;
 
   @Autowired
   private EmployeeRepository employeeRepository;
@@ -70,6 +70,7 @@ public class EmployeeControllerIntegrationTest {
     employeeRepository.deleteAll();
     mongoTemplate.indexOps(Employee.class)
         .ensureIndex(new Index("empNo", Sort.Direction.ASC).unique());
+    employee = Employee.builder().empNo(EMP_NO).build();
     departmentRequest =
         DepartmentRequest.builder().deptNo(DEPT_NO).deptName(DEPT_NAME).loc(LOC).build();
     request = EmployeeCreateRequest.builder().empNo(EMP_NO).empName(EMP_NAME).comm(COMM)
@@ -87,7 +88,21 @@ public class EmployeeControllerIntegrationTest {
     BaseResponse baseResponse =
         objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
     Assert.assertTrue(baseResponse.isSuccess());
-    employeeRepository.findFirstByEmpNoAndMarkForDeleteFalse(EMP_NO);
+    Employee employee = employeeRepository.findFirstByEmpNoAndMarkForDeleteFalse(EMP_NO);
+    Assert.assertEquals(EMP_NAME, employee.getEmpName());
+  }
+
+  @Test
+  public void createEmployee_failed_returnError() throws Exception {
+    employeeRepository.save(employee);
+    ValidatableResponse validatableResponse =
+        RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
+            .queryParam(CHANNEL_ID_KEY, CHANNEL_ID_VALUE).queryParam(CLIENT_ID, CLIENT_ID_VALUE)
+            .queryParam(REQUEST_ID_KEY, REQUEST_ID_VALUE).queryParam(USERNAME_KEY, USERNAME_VALUE)
+            .body(request).post(CONTEXT_PATH + EmployeeControllerPath.BASE_PATH).then();
+    BaseResponse baseResponse =
+        objectMapper.readValue(validatableResponse.extract().asString(), BaseResponse.class);
+    Assert.assertFalse(baseResponse.isSuccess());
   }
 
 
