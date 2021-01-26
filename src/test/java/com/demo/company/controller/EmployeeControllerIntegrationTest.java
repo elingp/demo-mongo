@@ -93,7 +93,7 @@ public class EmployeeControllerIntegrationTest {
   }
 
   @Test
-  public void createEmployee_failed_returnError() throws Exception {
+  public void createEmployee_failed_returnBaseResponse() throws Exception {
     employeeRepository.save(employee);
     ValidatableResponse validatableResponse =
         RestAssured.given().contentType("application/json").queryParam(STORE_ID_KEY, STORE_ID_VALUE)
