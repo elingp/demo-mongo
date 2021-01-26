@@ -14,17 +14,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Address implements Serializable {
 
-    public static final String FIELD_ADDRESS_NAME = "addressName";
-    public static final String FIELD_ADDRESS = "address";
-    public static final String FIELD_CITY = "city";
+  public static final String FIELD_ADDRESS_NAME = "addressName";
+  public static final String FIELD_ADDRESS = "address";
+  public static final String FIELD_CITY = "city";
 
-    @Field(value = Address.FIELD_ADDRESS_NAME)
-    private Integer addressName;
+  @Field(value = Address.FIELD_ADDRESS_NAME)
+  private Integer addressName;
 
-    @Field(value = Address.FIELD_ADDRESS)
-    private String address;
+  @Field(value = Address.FIELD_ADDRESS)
+  private String address;
 
-    @Field(value = Address.FIELD_CITY)
-    private String city;
+  @Field(value = Address.FIELD_CITY)
+  private String city;
 
 }

@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @EnableMongoAuditing
 public class AuditorAwareConfiguration {
 
-	@Bean
-	public AuditorAwareData auditorAwareData() throws Exception {
-		return new AuditorAwareData();
-	}
+  @Bean
+  public AuditorAwareData auditorAwareData() throws Exception {
+    return new AuditorAwareData();
+  }
 
 }

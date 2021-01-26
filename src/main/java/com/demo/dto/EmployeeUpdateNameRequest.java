@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeUpdateNameRequest implements Serializable {
 
-	private String empName;
+  private String empName;
 
 }

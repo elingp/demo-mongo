@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PersonRepository extends MongoRepository<Person, String> {
 
-    Person findFirstByPersonCode(String code);
+  Person findFirstByPersonCode(String code);
 
-//    Page<Person> find(Pageable pageable);
+  // Page<Person> find(Pageable pageable);
 
-    void deleteByPersonCode(String code);
+  void deleteByPersonCode(String code);
 }

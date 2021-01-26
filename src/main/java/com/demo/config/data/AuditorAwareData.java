@@ -7,10 +7,11 @@ import org.springframework.util.StringUtils;
 
 public class AuditorAwareData implements AuditorAware<String> {
 
-	public static final String INITIATOR = "SYSTEM";
+  public static final String INITIATOR = "SYSTEM";
 
-	@Override
-	public Optional<String> getCurrentAuditor() {
-		return Optional.of(StringUtils.isEmpty(Credential.getUsername()) ? INITIATOR : Credential.getUsername());
-	}
+  @Override
+  public Optional<String> getCurrentAuditor() {
+    return Optional
+        .of(StringUtils.isEmpty(Credential.getUsername()) ? INITIATOR : Credential.getUsername());
+  }
 }

@@ -7,7 +7,8 @@ import com.demo.company.entity.Employee;
 
 public interface EmployeeCustomRepository {
 
-	Page<Employee> findByStoreIdAndEmpNameMarkForDeleteFalse(String storeId, String empName, Pageable pageable);
-	
+  Page<Employee> findByStoreIdAndEmpNameMarkForDeleteFalse(String storeId, String empName,
+      Pageable pageable);
+
 }
 

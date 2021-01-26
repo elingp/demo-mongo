@@ -26,9 +26,17 @@ public class SwaggerConfiguration {
         .paths(PathSelectors.ant("/api/**")).build()
         .genericModelSubstitutes(DeferredResult.class, ResponseEntity.class)
         .globalOperationParameters(Arrays.asList(
-            new ParameterBuilder().name("storeId").parameterType("header").modelRef(new ModelRef("string")).required(true).defaultValue("10001").description("client's store id").build(),
-            new ParameterBuilder().name("clientId").parameterType("header").modelRef(new ModelRef("string")).required(true).defaultValue("client").description("client's id").build(),
-            new ParameterBuilder().name("channelId").parameterType("header").modelRef(new ModelRef("string")).required(true).defaultValue("channel").description("client's channel id").build(),
-            new ParameterBuilder().name("requestId").parameterType("header").modelRef(new ModelRef("string")).required(true).defaultValue("RANDOM").description("unique id per request").build()));
+            new ParameterBuilder().name("storeId").parameterType("header")
+                .modelRef(new ModelRef("string")).required(true).defaultValue("10001")
+                .description("client's store id").build(),
+            new ParameterBuilder().name("clientId").parameterType("header")
+                .modelRef(new ModelRef("string")).required(true).defaultValue("client")
+                .description("client's id").build(),
+            new ParameterBuilder().name("channelId").parameterType("header")
+                .modelRef(new ModelRef("string")).required(true).defaultValue("channel")
+                .description("client's channel id").build(),
+            new ParameterBuilder().name("requestId").parameterType("header")
+                .modelRef(new ModelRef("string")).required(true).defaultValue("RANDOM")
+                .description("unique id per request").build()));
   }
 }

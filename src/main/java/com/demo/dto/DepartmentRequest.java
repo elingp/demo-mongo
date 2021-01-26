@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DepartmentRequest implements Serializable {
 
-	private Integer deptNo;
-	private String deptName;
-	private String loc;
+  private Integer deptNo;
+  private String deptName;
+  private String loc;
 
 }

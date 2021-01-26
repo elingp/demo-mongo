@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface PersonService {
 
-    void create(Person person) throws Exception;
+  void create(Person person) throws Exception;
 
-    void update(String code, Person person) throws Exception;
+  void update(String code, Person person) throws Exception;
 
-    void updateName(String code, Person person) throws Exception;
+  void updateName(String code, Person person) throws Exception;
 
-//    Page<Person> find(Pageable pageable) throws Exception;
+  // Page<Person> find(Pageable pageable) throws Exception;
 
-    List<Person> findAll() throws Exception;
+  List<Person> findAll() throws Exception;
 
-    Person findByPersonCode(String code) throws Exception;
+  Person findByPersonCode(String code) throws Exception;
 
-    void deleteByPersonCode(String code) throws Exception;
+  void deleteByPersonCode(String code) throws Exception;
 }

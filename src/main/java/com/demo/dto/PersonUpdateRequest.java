@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonUpdateRequest implements Serializable {
-    private String personName;
-    @Builder.Default
-    private List<AddressRequest> addresses = new ArrayList<>();
+  private String personName;
+  @Builder.Default
+  private List<AddressRequest> addresses = new ArrayList<>();
 }

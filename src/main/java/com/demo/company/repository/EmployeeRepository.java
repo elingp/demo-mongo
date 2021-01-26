@@ -7,23 +7,26 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.demo.company.entity.Employee;
 
-public interface EmployeeRepository extends MongoRepository<Employee, String>, EmployeeCustomRepository {
+public interface EmployeeRepository
+    extends MongoRepository<Employee, String>, EmployeeCustomRepository {
 
-	Employee findFirstByEmpNoAndMarkForDeleteFalse(Integer empNo);
+  Employee findFirstByEmpNoAndMarkForDeleteFalse(Integer empNo);
 
-	Page<Employee> findByMarkForDeleteFalse(Pageable pageable);
+  Page<Employee> findByMarkForDeleteFalse(Pageable pageable);
 
-	void deleteByEmpNo(Integer empNo);
+  void deleteByEmpNo(Integer empNo);
 
-	// Contoh penggunaan lainnya
-	Page<Employee> findByEmpNameContainingIgnoreCaseAndMarkForDeleteFalse(String empName, Pageable pageable);
+  // Contoh penggunaan lainnya
+  Page<Employee> findByEmpNameContainingIgnoreCaseAndMarkForDeleteFalse(String empName,
+      Pageable pageable);
 
-	Page<Employee> findByDepartment_DeptNameContainingIgnoreCaseAndMarkForDeleteFalse(String deptName,
-			Pageable pageable);
+  Page<Employee> findByDepartment_DeptNameContainingIgnoreCaseAndMarkForDeleteFalse(String deptName,
+      Pageable pageable);
 
-	@Query("{$and: [{storeId: ?0},{empNo: {$in: ?1}}]}")
-	Page<Employee> findByStoreIdAndEmpNosAndMarkForDeleteFalse(String storeId, String empNo, Pageable pageable);
+  @Query("{$and: [{storeId: ?0},{empNo: {$in: ?1}}]}")
+  Page<Employee> findByStoreIdAndEmpNosAndMarkForDeleteFalse(String storeId, String empNo,
+      Pageable pageable);
 
-	@Query(fields = "{'sal' : 0}")
-	Employee findByStoreIdAndEmpNoAndMarkForDeleteFalse(String storeId, String empNo);
+  @Query(fields = "{'sal' : 0}")
+  Employee findByStoreIdAndEmpNoAndMarkForDeleteFalse(String storeId, String empNo);
 }

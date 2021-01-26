@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeCreateRequest implements Serializable {
 
-	private Integer empNo;
-	private String empName;
-	private String job;
-	private Integer mgr;
-	private String hireDate;
-	private Double sal;
-	private Double comm;
-	private DepartmentRequest department;
+  private Integer empNo;
+  private String empName;
+  private String job;
+  private Integer mgr;
+  private String hireDate;
+  private Double sal;
+  private Double comm;
+  private DepartmentRequest department;
 }

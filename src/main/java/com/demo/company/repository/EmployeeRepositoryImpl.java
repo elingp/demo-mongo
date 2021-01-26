@@ -16,20 +16,21 @@ import com.demo.company.entity.Employee;
 
 public class EmployeeRepositoryImpl implements EmployeeCustomRepository {
 
-	@Autowired
-	private MongoTemplate mongoTemplate;
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
-	@Override
-	public Page<Employee> findByStoreIdAndEmpNameMarkForDeleteFalse(String storeId, String empName, Pageable pageable) {
-		Query query = new Query();
-		Criteria criteria = Criteria.where("storeId").is(storeId).and("markForDelete").is(false);
-		if (Objects.nonNull(empName)) {
-			criteria.and("empName").regex("*empName*", "i");
-		}
-		query.addCriteria(criteria);
-		Long totalElements = this.mongoTemplate.count(query, Profile.class);
-		query.with(pageable);
-		List<Employee> employees = this.mongoTemplate.find(query, Employee.class);
-		return new PageImpl<>(employees, pageable, totalElements);
-	}
+  @Override
+  public Page<Employee> findByStoreIdAndEmpNameMarkForDeleteFalse(String storeId, String empName,
+      Pageable pageable) {
+    Query query = new Query();
+    Criteria criteria = Criteria.where("storeId").is(storeId).and("markForDelete").is(false);
+    if (Objects.nonNull(empName)) {
+      criteria.and("empName").regex("*empName*", "i");
+    }
+    query.addCriteria(criteria);
+    Long totalElements = this.mongoTemplate.count(query, Profile.class);
+    query.with(pageable);
+    List<Employee> employees = this.mongoTemplate.find(query, Employee.class);
+    return new PageImpl<>(employees, pageable, totalElements);
+  }
 }

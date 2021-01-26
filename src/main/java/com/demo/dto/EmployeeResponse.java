@@ -17,22 +17,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeResponse implements Serializable {
 
-	private Integer empNo;
-	private String empName;
-	private String job;
-	private Integer mgr;
-	private String hireDate;
-	private Double sal;
-	private Double comm;
-	private Integer deptNo;
-	private DepartmentResponse department;
-	
-	private String id;
-	private boolean markForDelete = false;
-	private Long version = 0L;
-	private String createdBy;
-	private Date createdDate;
-	private String updatedBy;
-	private Date updatedDate;
-	private String storeId;
+  private Integer empNo;
+  private String empName;
+  private String job;
+  private Integer mgr;
+  private String hireDate;
+  private Double sal;
+  private Double comm;
+  private Integer deptNo;
+  private DepartmentResponse department;
+
+  private String id;
+  private boolean markForDelete = false;
+  private Long version = 0L;
+  private String createdBy;
+  private Date createdDate;
+  private String updatedBy;
+  private Date updatedDate;
+  private String storeId;
 }

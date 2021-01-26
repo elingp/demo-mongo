@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressResponse implements Serializable {
-    private String addressName;
-    private String address;
-    private String city;
+  private String addressName;
+  private String address;
+  private String city;
 }

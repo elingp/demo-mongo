@@ -7,5 +7,4 @@ public interface EmployeeControllerPath {
   String UPDATE_BY_CODE = "/{code}";
   String DELETE_BY_CODE = "/{code}";
   String UPDATE_NAME_BY_CODE = "/{code}/name";
-  
 }

@@ -15,5 +15,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class PersonUpdateNameRequest implements Serializable {
 
-    private String personName;
+  private String personName;
 }

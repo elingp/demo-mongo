@@ -18,17 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonResponse implements Serializable {
 
-    private String personCode;
-    private String personName;
-    @Builder.Default
-    private List<AddressResponse> addresses = new ArrayList<>();
+  private String personCode;
+  private String personName;
+  @Builder.Default
+  private List<AddressResponse> addresses = new ArrayList<>();
 
-    private String id;
-    private boolean markForDelete = false;
-    private Long version = 0L;
-    private String createdBy;
-    private Date createdDate;
-    private String updatedBy;
-    private Date updatedDate;
-    private String storeId;
+  private String id;
+  private boolean markForDelete = false;
+  private Long version = 0L;
+  private String createdBy;
+  private Date createdDate;
+  private String updatedBy;
+  private Date updatedDate;
+  private String storeId;
 }
