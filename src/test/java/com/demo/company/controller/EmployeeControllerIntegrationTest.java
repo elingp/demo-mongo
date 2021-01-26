@@ -2,12 +2,12 @@ package com.demo.company.controller;
 
 import com.demo.DemoApplication;
 import com.demo.base.BaseResponse;
+import com.demo.company.entity.Employee;
 import com.demo.company.repository.EmployeeRepository;
 import com.demo.dto.DepartmentRequest;
 import com.demo.dto.EmployeeCreateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +16,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.Index;
+import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -50,19 +54,26 @@ public class EmployeeControllerIntegrationTest {
   private int port;
 
   private EmployeeCreateRequest request;
-  private DepartmentRequest department;
+  private DepartmentRequest departmentRequest;
   private ObjectMapper objectMapper;
 
   @Autowired
-  EmployeeRepository employeeRepository;
+  private EmployeeRepository employeeRepository;
+
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
   @Before
   public void setUp() {
     RestAssured.port = port;
     objectMapper = new ObjectMapper();
-    department = DepartmentRequest.builder().deptNo(DEPT_NO).deptName(DEPT_NAME).loc(LOC).build();
+    employeeRepository.deleteAll();
+    mongoTemplate.indexOps(Employee.class)
+        .ensureIndex(new Index("empNo", Sort.Direction.ASC).unique());
+    departmentRequest =
+        DepartmentRequest.builder().deptNo(DEPT_NO).deptName(DEPT_NAME).loc(LOC).build();
     request = EmployeeCreateRequest.builder().empNo(EMP_NO).empName(EMP_NAME).comm(COMM)
-        .hireDate(HIRE_DATE).mgr(MGR).sal(SAL).department(department).build();
+        .hireDate(HIRE_DATE).mgr(MGR).sal(SAL).department(departmentRequest).build();
   }
 
   @Test
